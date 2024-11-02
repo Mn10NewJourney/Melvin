@@ -1,0 +1,5 @@
+LAST UPDATED: 17 July 2023
+
+Information regarding the sliding doors:
+*Credit is given to EG881 for the "darkwooddoor.jpg" file, which was edited as the "darkwooddoor_slide_*.png" textures (two different versions).
+*For all other textures, they were edited from the original ones that are in SVN.
