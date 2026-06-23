@@ -45,10 +45,10 @@
 	if[%Direction% = back | %Direction% = Back] AddFloorIndicator %FLInd-Prefix%, back, %CenterX%, %CenterZ% + 0.002, 0.45, 0.333, %Offset%
 
 	#Directional arrows next to floor indicators
-	if[%Direction% = front | %Direction% = Front] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.225 - 0.075, %CenterZ% - 0.002, %Offset% + 0.1665 - 0.175, front, 0.225, 0.375, false, 0, 0
-	if[%Direction% = left | %Direction% = Left] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.002, %CenterZ% - 0.225 + 0.075, %Offset% + 0.1665 - 0.175, left, 0.225, 0.375, false, 0, 0
-	if[%Direction% = right | %Direction% = Right] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.002, %CenterZ% + 0.225 - 0.075, %Offset% + 0.1665 - 0.175, right, 0.225, 0.375, false, 0, 0
-	if[%Direction% = back | %Direction% = Back] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.225 + 0.075, %CenterZ% + 0.002, %Offset% + 0.1665 - 0.175, back, 0.225, 0.375, false, 0, 0
+	if[%Direction% = front | %Direction% = Front] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.225 - 0.075, %CenterZ% - 0.002, %Offset% + 0.1665 - 0.1875, front, 0.225, 0.375, false, 0, 0
+	if[%Direction% = left | %Direction% = Left] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.002, %CenterZ% - 0.225 + 0.075, %Offset% + 0.1665 - 0.1875, left, 0.225, 0.375, false, 0, 0
+	if[%Direction% = right | %Direction% = Right] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.002, %CenterZ% + 0.225 - 0.075, %Offset% + 0.1665 - 0.1875, right, 0.225, 0.375, false, 0, 0
+	if[%Direction% = back | %Direction% = Back] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.225 + 0.075, %CenterZ% + 0.002, %Offset% + 0.1665 - 0.1875, back, 0.225, 0.375, false, 0, 0
 <EndFunction>
 
 ########################################
@@ -124,10 +124,10 @@
 	if[%Direction% = back | %Direction% = Back] AddFloorIndicator %ElevNo%, false, %FLInd-Prefix%, back, %CenterX%, %CenterZ% + 0.002, 0.45, 0.333, %Offset% + 0.25 - 0.1665
 
 	#Directional arrows next to floor indicators (ActiveDirection set to false)
-	if[%Direction% = front | %Direction% = Front] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.225 - 0.075, %CenterZ% - 0.002, %Offset% + 0.25 - 0.175, front, 0.225, 0.375, false, 0, 0
-	if[%Direction% = left | %Direction% = Left] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.002, %CenterZ% - 0.225 + 0.075, %Offset% + 0.25 - 0.175, left, 0.225, 0.375, false, 0, 0
-	if[%Direction% = right | %Direction% = Right] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.002, %CenterZ% + 0.225 - 0.075, %Offset% + 0.25 - 0.175, right, 0.225, 0.375, false, 0, 0
-	if[%Direction% = back | %Direction% = Back] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.225 + 0.075, %CenterZ% + 0.002, %Offset% + 0.25 - 0.175, back, 0.225, 0.375, false, 0, 0
+	if[%Direction% = front | %Direction% = Front] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.225 - 0.075, %CenterZ% - 0.002, %Offset% + 0.25 - 0.1875, front, 0.225, 0.375, false, 0, 0
+	if[%Direction% = left | %Direction% = Left] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.002, %CenterZ% - 0.225 + 0.075, %Offset% + 0.25 - 0.1875, left, 0.225, 0.375, false, 0, 0
+	if[%Direction% = right | %Direction% = Right] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.002, %CenterZ% + 0.225 - 0.075, %Offset% + 0.25 - 0.1875, right, 0.225, 0.375, false, 0, 0
+	if[%Direction% = back | %Direction% = Back] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.225 + 0.075, %CenterZ% + 0.002, %Offset% + 0.25 - 0.1875, back, 0.225, 0.375, false, 0, 0
 <EndFunction>
 
 ########################################
