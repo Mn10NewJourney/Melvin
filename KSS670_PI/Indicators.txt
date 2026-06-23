@@ -145,11 +145,11 @@
 
 	#Back panel
 	DrawWalls = true, false, false, false, false, false
-	if[%Direction% = front | %Direction% = Front] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.6, %CenterZ% - 0.001, %CenterX% + 0.6, %CenterZ% - 0.001, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
-	if[%Direction% = left | %Direction% = Left] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.001, %CenterZ% - 0.6, %CenterX% - 0.001, %CenterZ% + 0.6, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+	if[%Direction% = front | %Direction% = Front] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.55, %CenterZ% - 0.001, %CenterX% + 0.55, %CenterZ% - 0.001, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+	if[%Direction% = left | %Direction% = Left] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.001, %CenterZ% - 0.55, %CenterX% - 0.001, %CenterZ% + 0.55, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
 	DrawWalls = false, true, false, false, false, false
-	if[%Direction% = right | %Direction% = Right] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% + 0.001, %CenterZ% - 0.6, %CenterX% + 0.001, %CenterZ% + 0.6, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
-	if[%Direction% = back | %Direction% = Back] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.6, %CenterZ% + 0.001, %CenterX% + 0.6, %CenterZ% + 0.001, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+	if[%Direction% = right | %Direction% = Right] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% + 0.001, %CenterZ% - 0.55, %CenterX% + 0.001, %CenterZ% + 0.55, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+	if[%Direction% = back | %Direction% = Back] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.55, %CenterZ% + 0.001, %CenterX% + 0.55, %CenterZ% + 0.001, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
 
 	#Lanterns
 	if[(%Direction% = front | %Direction% = Front) & (%floor% ! %HighestFloor% & %floor% ! %LowestFloor%)] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% - 0.250, %CenterZ% - 0.002, %Offset%, front, 0.55, 0.5, false, 0, 0
