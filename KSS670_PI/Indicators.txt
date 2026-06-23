@@ -1,0 +1,174 @@
+#Kone KSS 670 Floor Indicator Script
+#Copyright (c) 2026-Present - Mn10
+
+#Created on between 23 June 2026
+
+########################################
+
+#NOTICE:
+#1. This script may be included with your buildings if it is used in AT LEAST one building in your packages.
+
+#2. A direct or an indirect credit to me would be nice when implementing this script in your creations.
+
+#3. DO NOT release any of my script alone without having used in any buildings.
+
+########################################
+
+#SCRIPT INCLUSION CODE (Remove hashtag first):
+
+#<Include data/Melvin/KSS670_PI/Indicators.txt>
+
+########################################
+
+#Internal indicator functions
+<Function KSS670_PI_InternalInd>
+	#General parameters
+	Set Direction = %param1%
+	Set CenterX = %param2%
+	Set CenterZ = %param3%
+	Set Offset = %param4%
+
+	#Floor indicator texture prefix
+	Set FLInd-Prefix = %param5%
+
+	#Directional arrows (Lit up when the elevator is moving)
+	Set ArrowBlankTex = %param6%
+	Set ArrowUpTex = %param7%
+	Set ArrowDownTex = %param8%
+
+	########################################
+
+	#Floor indicator
+	if[%Direction% = front | %Direction% = Front] AddFloorIndicator %FLInd-Prefix%, front, %CenterX%, %CenterZ% - 0.002, 0.45, 0.333, %Offset%
+	if[%Direction% = left | %Direction% = Left] AddFloorIndicator %FLInd-Prefix%, left, %CenterX% - 0.002, %CenterZ%, 0.45, 0.333, %Offset%
+	if[%Direction% = right | %Direction% = Right] AddFloorIndicator %FLInd-Prefix%, right, %CenterX% + 0.002, %CenterZ%, 0.45, 0.333, %Offset%
+	if[%Direction% = back | %Direction% = Back] AddFloorIndicator %FLInd-Prefix%, back, %CenterX%, %CenterZ% + 0.002, 0.45, 0.333, %Offset%
+
+	#Directional arrows next to floor indicators
+	if[%Direction% = front | %Direction% = Front] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.225 - 0.075, %CenterZ% - 0.002, %Offset% + 0.1665 - 0.175, front, 0.225, 0.375, false, 0, 0
+	if[%Direction% = left | %Direction% = Left] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.002, %CenterZ% - 0.225 + 0.075, %Offset% + 0.1665 - 0.175, left, 0.225, 0.375, false, 0, 0
+	if[%Direction% = right | %Direction% = Right] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.002, %CenterZ% + 0.225 - 0.075, %Offset% + 0.1665 - 0.175, right, 0.225, 0.375, false, 0, 0
+	if[%Direction% = back | %Direction% = Back] AddDirectionalIndicator true, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.225 + 0.075, %CenterZ% + 0.002, %Offset% + 0.1665 - 0.175, back, 0.225, 0.375, false, 0, 0
+<EndFunction>
+
+########################################
+
+#Texture spefication functions
+#FOR EXTERNAL INDICATORS ONLY.
+
+<Function KSS670_PI_LanternTex>
+	#Lantern textures
+	Set L-Up = %param1% #Up lantern (Unlit)
+	Set L-UpLit = %param2% #Up lantern (Lit)
+	Set L-Down = %param3% #Down lantern (Unlit)
+	Set L-DownLit = %param4% #Down lantern (Lit)
+
+	#Back panel texture
+	Set PanelTexture = %param5%
+
+	#Floor indicator texture prefix
+	Set FLInd-Prefix = %param6%
+
+	#Directional arrows (Lit up when the corresponding elevator is moving)
+	Set ArrowBlankTex = %param7%
+	Set ArrowUpTex = %param8%
+	Set ArrowDownTex = %param9%
+<EndFunction>
+
+########################################
+
+#Full indicator set function
+<Function KSS670_PI_LobbyInds>
+	#Sets
+	Set Direction = %param1%
+	Set ElevNo = %param2%
+	Set CenterX = %param3%
+	Set CenterZ = %param4%
+	Set Offset = %param5%
+	Set LowestFloor = %param6%
+	Set HighestFloor = %param7%
+
+	#Back panel
+	DrawWalls = true, false, false, false, false, false
+	if[%Direction% = front | %Direction% = Front] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.85, %CenterZ% - 0.001, %CenterX% + 0.85, %CenterZ% - 0.001, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+	if[%Direction% = left | %Direction% = Left] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.001, %CenterZ% - 0.85, %CenterX% - 0.001, %CenterZ% + 0.85, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+	DrawWalls = false, true, false, false, false, false
+	if[%Direction% = right | %Direction% = Right] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% + 0.001, %CenterZ% - 0.85, %CenterX% + 0.001, %CenterZ% + 0.85, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+	if[%Direction% = back | %Direction% = Back] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.85, %CenterZ% + 0.001, %CenterX% + 0.85, %CenterZ% + 0.001, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+
+	#Lanterns
+	if[(%Direction% = front | %Direction% = Front) & %floor% < %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% - 0.25 - 0.3, %CenterZ% - 0.002, %Offset%, front, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = front | %Direction% = Front) & %floor% = %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% - 0.25 - 0.3, %CenterZ% - 0.002, %Offset%, front, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = front | %Direction% = Front) & %floor% > %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% + 0.25 + 0.3, %CenterZ% - 0.002, %Offset%, front, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = front | %Direction% = Front) & %floor% = %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% + 0.25 + 0.3, %CenterZ% - 0.002, %Offset%, front, 0.55, 0.5, false, 0, 0
+
+	if[(%Direction% = left | %Direction% = Left) & %floor% < %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% - 0.002, %CenterZ% + 0.25 + 0.3, %Offset%, left, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = left | %Direction% = Left) & %floor% = %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% - 0.002, %CenterZ% + 0.25 + 0.3, %Offset%, left, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = left | %Direction% = Left) & %floor% > %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% - 0.002, %CenterZ% - 0.25 - 0.3, %Offset%, left, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = left | %Direction% = Left) & %floor% = %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% - 0.002, %CenterZ% - 0.25 - 0.3, %Offset%, left, 0.55, 0.5, false, 0, 0
+
+	if[(%Direction% = right | %Direction% = Right) & %floor% < %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% + 0.002, %CenterZ% - 0.25 - 0.3, %Offset%, right, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = right | %Direction% = Right) & %floor% = %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% + 0.002, %CenterZ% - 0.25 - 0.3, %Offset%, right, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = right | %Direction% = Right) & %floor% > %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% + 0.002, %CenterZ% + 0.25 + 0.3, %Offset%, right, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = right | %Direction% = Right) & %floor% = %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% + 0.002, %CenterZ% + 0.25 + 0.3, %Offset%, right, 0.55, 0.5, false, 0, 0
+
+	if[(%Direction% = back | %Direction% = Back) & %floor% < %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% + 0.25 + 0.3, %CenterZ% + 0.002, %Offset%, back, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = back | %Direction% = Back) & %floor% = %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% + 0.25 + 0.3, %CenterZ% + 0.002, %Offset%, back, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = back | %Direction% = Back) & %floor% > %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% - 0.25 - 0.3, %CenterZ% + 0.002, %Offset%, back, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = back | %Direction% = Back) & %floor% = %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% - 0.25 - 0.3, %CenterZ% + 0.002, %Offset%, back, 0.55, 0.5, false, 0, 0
+
+	#Floor indicator
+	if[%Direction% = front | %Direction% = Front] AddFloorIndicator %ElevNo%, false, %FLInd-Prefix%, front, %CenterX%, %CenterZ% - 0.002, 0.45, 0.333, %Offset% + 0.25 - 0.1665
+	if[%Direction% = left | %Direction% = Left] AddFloorIndicator %ElevNo%, false, %FLInd-Prefix%, left, %CenterX% - 0.002, %CenterZ%, 0.45, 0.333, %Offset% + 0.25 - 0.1665
+	if[%Direction% = right | %Direction% = Right] AddFloorIndicator %ElevNo%, false, %FLInd-Prefix%, right, %CenterX% + 0.002, %CenterZ%, 0.45, 0.333, %Offset% + 0.25 - 0.1665
+	if[%Direction% = back | %Direction% = Back] AddFloorIndicator %ElevNo%, false, %FLInd-Prefix%, back, %CenterX%, %CenterZ% + 0.002, 0.45, 0.333, %Offset% + 0.25 - 0.1665
+
+	#Directional arrows next to floor indicators (ActiveDirection set to false)
+	if[%Direction% = front | %Direction% = Front] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.225 - 0.075, %CenterZ% - 0.002, %Offset% + 0.25 - 0.175, front, 0.225, 0.375, false, 0, 0
+	if[%Direction% = left | %Direction% = Left] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.002, %CenterZ% - 0.225 + 0.075, %Offset% + 0.25 - 0.175, left, 0.225, 0.375, false, 0, 0
+	if[%Direction% = right | %Direction% = Right] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% + 0.002, %CenterZ% + 0.225 - 0.075, %Offset% + 0.25 - 0.175, right, 0.225, 0.375, false, 0, 0
+	if[%Direction% = back | %Direction% = Back] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %ArrowBlankTex%, %ArrowUpTex%, %ArrowBlankTex%, %ArrowDownTex%, %CenterX% - 0.225 + 0.075, %CenterZ% + 0.002, %Offset% + 0.25 - 0.175, back, 0.225, 0.375, false, 0, 0
+<EndFunction>
+
+########################################
+
+#Lantern function
+<Function KSS670_PI_LobbyLanterns>
+	#Sets
+	Set Direction = %param1%
+	Set ElevNo = %param2%
+	Set CenterX = %param3%
+	Set CenterZ = %param4%
+	Set Offset = %param5%
+	Set LowestFloor = %param6%
+	Set HighestFloor = %param7%
+
+	#Back panel
+	DrawWalls = true, false, false, false, false, false
+	if[%Direction% = front | %Direction% = Front] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.6, %CenterZ% - 0.001, %CenterX% + 0.6, %CenterZ% - 0.001, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+	if[%Direction% = left | %Direction% = Left] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.001, %CenterZ% - 0.6, %CenterX% - 0.001, %CenterZ% + 0.6, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+	DrawWalls = false, true, false, false, false, false
+	if[%Direction% = right | %Direction% = Right] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% + 0.001, %CenterZ% - 0.6, %CenterX% + 0.001, %CenterZ% + 0.6, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+	if[%Direction% = back | %Direction% = Back] AddWall Elev(%ElevNo%)IndPanel, %PanelTexture%, 0, %CenterX% - 0.6, %CenterZ% + 0.001, %CenterX% + 0.6, %CenterZ% + 0.001, 0.5, 0.5, %Offset%, %Offset%, 0, 0, false
+
+	#Lanterns
+	if[(%Direction% = front | %Direction% = Front) & (%floor% ! %HighestFloor% & %floor% ! %LowestFloor%)] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% - 0.250, %CenterZ% - 0.002, %Offset%, front, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = front | %Direction% = Front) & (%floor% ! %HighestFloor% & %floor% ! %LowestFloor%)] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% + 0.250, %CenterZ% - 0.002, %Offset%, front, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = front | %Direction% = Front) & %floor% = %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX%, %CenterZ% - 0.002, %Offset%, front, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = front | %Direction% = Front) & %floor% = %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX%, %CenterZ% - 0.002, %Offset%, front, 0.55, 0.5, false, 0, 0
+
+	if[(%Direction% = left | %Direction% = Left) & (%floor% ! %HighestFloor% & %floor% ! %LowestFloor%)] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% - 0.002, %CenterZ% + 0.250, %Offset%, left, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = left | %Direction% = Left) & (%floor% ! %HighestFloor% & %floor% ! %LowestFloor%)] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% - 0.002, %CenterZ% - 0.250, %Offset%, left, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = left | %Direction% = Left) & %floor% = %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% - 0.002, %CenterZ%, %Offset%, left, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = left | %Direction% = Left) & %floor% = %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% - 0.002, %CenterZ%, %Offset%, left, 0.55, 0.5, false, 0, 0
+
+	if[(%Direction% = right | %Direction% = Right) & (%floor% ! %HighestFloor% & %floor% ! %LowestFloor%)] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% + 0.002, %CenterZ% - 0.250, %Offset%, right, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = right | %Direction% = Right) & (%floor% ! %HighestFloor% & %floor% ! %LowestFloor%)] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% + 0.002, %CenterZ% + 0.250, %Offset%, right, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = right | %Direction% = Right) & %floor% = %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% + 0.002, %CenterZ%, %Offset%, right, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = right | %Direction% = Right) & %floor% = %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% + 0.002, %CenterZ%, %Offset%, right, 0.55, 0.5, false, 0, 0
+
+	if[(%Direction% = back | %Direction% = Back) & (%floor% ! %HighestFloor% & %floor% ! %LowestFloor%)] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX% + 0.250, %CenterZ% + 0.002, %Offset%, back, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = back | %Direction% = Back) & (%floor% ! %HighestFloor% & %floor% ! %LowestFloor%)] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX% - 0.250, %CenterZ% + 0.002, %Offset%, back, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = back | %Direction% = Back) & %floor% = %LowestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Up%, %L-UpLit%, %L-Up%, %L-Up%, %CenterX%, %CenterZ% + 0.002, %Offset%, back, 0.55, 0.5, false, 0, 0
+	if[(%Direction% = back | %Direction% = Back) & %floor% = %HighestFloor%] AddDirectionalIndicator %ElevNo%, false, false, true, true, Blank, %L-Down%, %L-Down%, %L-Down%, %L-DownLit%, %CenterX%, %CenterZ% + 0.002, %Offset%, back, 0.55, 0.5, false, 0, 0
+<EndFunction>
